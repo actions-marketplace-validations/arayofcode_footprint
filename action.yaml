@@ -28,7 +28,7 @@ inputs:
       Does not affect aggregate stats (Stars Earned, Projects Owned) —
       all owned projects are always counted.
     required: false
-    default: "5"
+    default: "0"
   card:
     description: "Generate SVG card"
     required: false
