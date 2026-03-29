@@ -1,0 +1,53 @@
+name: Demo Footprint
+
+on:
+  workflow_dispatch:
+    inputs:
+      username:
+        description: "GitHub username"
+        required: false
+        type: string
+      min_stars:
+        description: "Minimum star count for owned projects to appear on card"
+        required: false
+        default: "0"
+        type: string
+      output_dir:
+        description: "Output directory for generated artifacts"
+        required: false
+        default: "dist"
+        type: string
+      card:
+        description: "Generate SVG card variants"
+        required: false
+        default: "true"
+        type: choice
+        options:
+          - "true"
+          - "false"
+      timeout:
+        description: "Timeout for GitHub API operations (seconds)"
+        required: false
+        default: "300"
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate footprint
+        uses: ./
+        with:
+          username: ${{ inputs.username }}
+          min_stars: ${{ inputs.min_stars }}
+          output_dir: ${{ inputs.output_dir }}
+          card: ${{ inputs.card }}
+          timeout: ${{ inputs.timeout }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
