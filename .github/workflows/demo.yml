@@ -12,11 +12,6 @@ on:
         required: false
         default: "0"
         type: string
-      output_dir:
-        description: "Output directory for generated artifacts"
-        required: false
-        default: "dist"
-        type: string
       card:
         description: "Generate SVG card variants"
         required: false
