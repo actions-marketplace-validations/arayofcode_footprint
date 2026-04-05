@@ -6,7 +6,7 @@
 
 It goes beyond raw commit or PR counts. Contributions are weighted by type, boosted if merged, scaled by repository popularity, and decayed for repetitive low-effort activity. The card is a projection of that model.
 
-![Extended Card](docs/images/card-extended.svg)
+![Footprint Card](docs/images/card-demo.svg)
 
 ---
 
