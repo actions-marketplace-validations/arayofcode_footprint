@@ -6,7 +6,7 @@
 
 It goes beyond raw commit or PR counts. Contributions are weighted by type, boosted if merged, scaled by repository popularity, and decayed for repetitive low-effort activity. The card is a projection of that model.
 
-![Extended Card](docs/images/card-extended.svg)
+![Footprint Card](docs/images/card-demo.svg)
 
 ---
 
@@ -158,31 +158,3 @@ Optional flags:
 | `-output`    | `dist`         | Output directory                 |
 | `-timeout`   | `300s`         | API timeout                      |
 | `-card`      | `true`         | Generate SVG cards               |
-
----
-
-## Architecture
-
-Footprint is a pipeline, not a badge service. The same scoring engine that populates `report.json` drives the card. Nothing is computed at render time.
-
-```
-fetch → classify → score → aggregate → render → write
-```
-
-**Pipeline laws enforced in code:**
-
-- `logic/aggregator.go` owns all score multiplication. Renderers and fetchers never compute scores.
-- Renderers consume finalized output models only — no re-derivation.
-- `DecideLayout` is a pure function: same inputs always produce the same geometry.
-- Decay ordering is deterministic: events are sorted chronologically before decay is applied, with URL as a stable tiebreaker.
-
-**Fetch sources** (all via GitHub GraphQL):
-
-- PRs authored (`author:<user> -user:<user> type:pr`)
-- PRs reviewed (`reviewer:<user> -user:<user> type:pr`)
-- Issues authored (`author:<user> -user:<user> type:issue`)
-- Issue comments (`user.issueComments`, paginated, private repos excluded)
-
----
-
-Contributions welcome. See [CONTRIBUTING.md](CONTRIBUTING.md).
